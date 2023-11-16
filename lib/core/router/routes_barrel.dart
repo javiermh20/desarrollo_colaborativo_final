@@ -1,0 +1,24 @@
+// login
+export 'package:desarrollo_colaborativo_final/views/login_screen/login_screen.dart';
+export 'package:desarrollo_colaborativo_final/views/menu_screen/menu_screen.dart';
+export 'package:desarrollo_colaborativo_final/views/presentation_screen/splash_screen.dart';
+// perfil
+export 'package:desarrollo_colaborativo_final/views/perfil_screen/perfil_screen.dart';
+// Alumnos
+export 'package:desarrollo_colaborativo_final/views/alumnos_screen/alumnos_screen.dart';
+export 'package:desarrollo_colaborativo_final/views/alumnos_screen/alumno_create_screen.dart';
+export 'package:desarrollo_colaborativo_final/models/alumno.dart';
+// Materias
+export 'package:desarrollo_colaborativo_final/views/materias_screen/materias_screen.dart';
+export 'package:desarrollo_colaborativo_final/views/materias_screen/materia_create_screen.dart';
+export 'package:desarrollo_colaborativo_final/models/materia.dart';
+// Calificaciones
+export 'package:desarrollo_colaborativo_final/views/calificaciones_screen/calificaciones_screen.dart';
+export 'package:desarrollo_colaborativo_final/views/calificaciones_screen/calificaciones_create_screen.dart';
+export 'package:desarrollo_colaborativo_final/models/calificacion.dart';
+
+// Widgets
+export 'package:desarrollo_colaborativo_final/widgets/image_widget.dart';
+export 'package:desarrollo_colaborativo_final/widgets/text_field_widget.dart';
+// Authentication
+export 'package:desarrollo_colaborativo_final/authentication/authentication_service.dart';
