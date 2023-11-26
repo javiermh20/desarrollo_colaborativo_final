@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:desarrollo_colaborativo_final/core/router/routes_barrel.dart';
+import 'package:desarrollo_colaborativo_final/models/alumno.dart';
 
 class AlumnoCrearScreen extends StatefulWidget {
   final Alumno? alumno;
@@ -42,64 +42,146 @@ class _AlumnoCrearScreenState extends State<AlumnoCrearScreen> {
       appBar: AppBar(
         title: const Text('Agregar/Editar Alumno'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              TextFormField(
-                controller: nombreController,
-                decoration: const InputDecoration(labelText: 'Nombre'),
-              ),
-              TextFormField(
-                controller: apellidoController,
-                decoration: const InputDecoration(labelText: 'Apellido'),
-              ),
-              TextFormField(
-                controller: matriculaController,
-                decoration: const InputDecoration(labelText: 'Matrícula'),
-              ),
-              TextFormField(
-                controller: carreraController,
-                decoration: const InputDecoration(labelText: 'Carrera'),
-              ),
-              TextFormField(
-                controller: semestreController,
-                decoration: const InputDecoration(labelText: 'Semestre'),
-                keyboardType: TextInputType.number,
-              ),
-              TextFormField(
-                controller: materiasController,
-                decoration: const InputDecoration(labelText: 'Materias'),
-              ),
-              TextFormField(
-                controller: fotoUrlController,
-                decoration: const InputDecoration(labelText: 'URL de la Foto'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  cargarFoto();
-                },
-                child: const Text('Cargar Foto'),
-              ),
-              if (fotoUrlController.text.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(fotoUrlController.text),
-                  ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              color: Colors.lightBlue, // Cambia el color de fondo aquí
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _buildTextField(
+                      controller: nombreController,
+                      label: 'Nombre',
+                      icon: Icons.person,
+                      fillColor: Colors.white,
+                    ),
+                    const SizedBox(height: 16.0),
+                    _buildTextField(
+                      controller: apellidoController,
+                      label: 'Apellido',
+                      icon: Icons.person,
+                      fillColor: Colors.white,
+                    ),
+                    const SizedBox(height: 16.0),
+                    _buildTextField(
+                      controller: matriculaController,
+                      label: 'Matrícula',
+                      icon: Icons.format_list_numbered,
+                      fillColor: Colors.white,
+                    ),
+                    const SizedBox(height: 16.0),
+                    _buildTextField(
+                      controller: carreraController,
+                      label: 'Carrera',
+                      icon: Icons.school,
+                      fillColor: Colors.white,
+                    ),
+                    const SizedBox(height: 16.0),
+                    _buildTextField(
+                      controller: semestreController,
+                      label: 'Semestre',
+                      icon: Icons.calendar_today,
+                      keyboardType: TextInputType.number,
+                      fillColor: Colors.white,
+                    ),
+                    const SizedBox(height: 16.0),
+                    _buildTextField(
+                      controller: materiasController,
+                      label: 'Materias',
+                      icon: Icons.book,
+                      fillColor: Colors.white,
+                    ),
+                    const SizedBox(height: 16.0),
+                    _buildTextField(
+                      controller: fotoUrlController,
+                      label: 'URL de la Foto',
+                      icon: Icons.image,
+                      fillColor: Colors.white,
+                    ),
+                    const SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        cargarFoto();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal:
+                              24.0, // Ajusta el padding horizontal según sea necesario
+                        ),
+                      ),
+                      child: const Text(
+                        'Cargar Foto',
+                        style: TextStyle(fontSize: 18.0, color: Colors.black),
+                      ),
+                    ),
+                    if (fotoUrlController.text.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(fotoUrlController.text),
+                        ),
+                      ),
+                    const SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        guardarAlumno();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal:
+                              24.0, // Ajusta el padding horizontal según sea necesario
+                        ),
+                      ),
+                      child: const Text(
+                        'Guardar',
+                        style: TextStyle(fontSize: 18.0, color: Colors.black),
+                      ),
+                    ),
+                  ],
                 ),
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  guardarAlumno();
-                },
-                child: const Text('Guardar'),
               ),
-            ],
+            ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    int maxLines = 1,
+    IconData? icon,
+    TextInputType? keyboardType,
+    required Color fillColor,
+  }) {
+    return TextFormField(
+      controller: controller,
+      maxLines: maxLines,
+      style: const TextStyle(fontSize: 16.0),
+      keyboardType: keyboardType,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: icon != null ? Icon(icon, size: 24.0) : null,
+        fillColor: fillColor,
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
         ),
+        contentPadding: const EdgeInsets.all(16.0),
       ),
     );
   }

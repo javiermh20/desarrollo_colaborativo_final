@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PerfilScreen extends StatefulWidget {
   const PerfilScreen({Key? key});
@@ -65,14 +66,8 @@ class _PerfilScreenState extends State<PerfilScreen> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.white.withOpacity(0.8),
-                                Colors.white,
-                              ],
-                            ),
+                            color: Color.fromARGB(
+                                255, 208, 210, 211), // Puedes ajustar el color
                           ),
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
@@ -80,7 +75,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 16.0,
-                              color: Colors.black87,
+                              color: Color.fromARGB(221, 0, 0, 0),
                             ),
                           ),
                         ),
@@ -105,9 +100,14 @@ class _PerfilScreenState extends State<PerfilScreen> {
                   ElevatedButton(
                     onPressed: () {
                       // Aquí puedes implementar la lógica para cerrar sesión
+                      // Por ejemplo, podrías limpiar el estado de autenticación o realizar otras tareas de limpieza.
+
+                      // Después de cerrar sesión, navega a la pantalla de inicio de sesión
+                      Get.toNamed(
+                          '/login'); // Ajusta la ruta según tu configuración de rutas
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.black,
+                      primary: const Color.fromARGB(255, 255, 255, 255),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
@@ -116,7 +116,9 @@ class _PerfilScreenState extends State<PerfilScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
                       child: Text(
                         'Cerrar Sesión',
-                        style: TextStyle(fontSize: 16.0, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            color: const Color.fromARGB(255, 0, 0, 0)),
                       ),
                     ),
                   ),

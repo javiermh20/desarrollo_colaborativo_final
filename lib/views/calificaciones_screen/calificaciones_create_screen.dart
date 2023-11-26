@@ -3,13 +3,12 @@ import 'package:get/get.dart';
 import 'package:desarrollo_colaborativo_final/core/router/routes_barrel.dart';
 
 class CalificacionCrearScreen extends StatefulWidget {
-  final CalificacionEstudiante?
-      calificacion; // Recibe la calificación como parámetro
+  final CalificacionEstudiante? calificacion;
 
-  const CalificacionCrearScreen({super.key, this.calificacion});
+  const CalificacionCrearScreen({Key? key, this.calificacion})
+      : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _CalificacionCrearScreenState createState() =>
       _CalificacionCrearScreenState();
 }
@@ -23,7 +22,6 @@ class _CalificacionCrearScreenState extends State<CalificacionCrearScreen> {
   void initState() {
     super.initState();
 
-    // Llenamos los controladores con los datos de la calificación si se proporciona
     if (widget.calificacion != null) {
       idAlumnoController.text = widget.calificacion!.idAlumno.toString();
       materiaController.text = widget.calificacion!.materia;
@@ -38,34 +36,80 @@ class _CalificacionCrearScreenState extends State<CalificacionCrearScreen> {
       appBar: AppBar(
         title: const Text('Agregar/Editar Calificación'),
       ),
-      body: Padding(
+      body: Container(
+        color: Colors.lightBlue,
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextFormField(
+            _buildTextField(
               controller: idAlumnoController,
-              decoration: const InputDecoration(labelText: 'ID del Alumno'),
+              label: 'ID del Alumno',
               keyboardType: TextInputType.number,
-            ),
-            TextFormField(
-              controller: materiaController,
-              decoration: const InputDecoration(labelText: 'Materia'),
-            ),
-            TextFormField(
-              controller: calificacionController,
-              decoration: const InputDecoration(labelText: 'Calificación'),
-              keyboardType: TextInputType.number,
+              icon: Icons.person,
+              fillColor: Colors.white,
             ),
             const SizedBox(height: 16.0),
+            _buildTextField(
+              controller: materiaController,
+              label: 'Materia',
+              icon: Icons.book,
+              fillColor: Colors.white,
+            ),
+            const SizedBox(height: 16.0),
+            _buildTextField(
+              controller: calificacionController,
+              label: 'Calificación',
+              keyboardType: TextInputType.number,
+              icon: Icons.star,
+              fillColor: Colors.white,
+            ),
+            const SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: () {
-                // Acción cuando se presiona el botón de guardar
                 guardarCalificacion();
               },
-              child: const Text('Guardar'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12.0,
+                  horizontal: 24.0,
+                ),
+              ),
+              child: const Text(
+                'Guardar',
+                style: TextStyle(fontSize: 18.0, color: Colors.black),
+              ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    IconData? icon,
+    TextInputType? keyboardType,
+    required Color fillColor,
+  }) {
+    return TextFormField(
+      controller: controller,
+      style: const TextStyle(fontSize: 16.0),
+      keyboardType: keyboardType,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: icon != null ? Icon(icon, size: 24.0) : null,
+        fillColor: fillColor,
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        contentPadding: const EdgeInsets.all(16.0),
       ),
     );
   }
@@ -76,15 +120,9 @@ class _CalificacionCrearScreenState extends State<CalificacionCrearScreen> {
     final double calificacion =
         double.tryParse(calificacionController.text) ?? 0.0;
 
-    // Realiza la lógica para guardar la calificación aquí.
-    // Puedes usar tu CalificacionEstudianteProvider o el método que prefieras.
-
-    // Ejemplo de cómo podrías usar el provider (asegúrate de tenerlo registrado en GetIt).
     final CalificacionEstudianteProvider calificacionProvider = Get.find();
 
-    // Verificamos si estamos editando o agregando una nueva calificación
     if (widget.calificacion == null) {
-      // Agregar nueva calificación
       calificacionProvider.addCalificacionEstudiante(CalificacionEstudiante(
         id: idAlumno,
         idAlumno: idAlumno,
@@ -92,16 +130,16 @@ class _CalificacionCrearScreenState extends State<CalificacionCrearScreen> {
         calificacion: calificacion.toInt(),
       ));
     } else {
-      // Editar calificación existente
-      calificacionProvider.updateCalificacionEstudiante(CalificacionEstudiante(
-        id: widget.calificacion!.id,
-        idAlumno: idAlumno,
-        materia: materia,
-        calificacion: calificacion.toInt(),
-      ));
+      calificacionProvider.updateCalificacionEstudiante(
+        CalificacionEstudiante(
+          id: widget.calificacion!.id,
+          idAlumno: idAlumno,
+          materia: materia,
+          calificacion: calificacion.toInt(),
+        ),
+      );
     }
 
-    // Cierra la pantalla actual después de guardar la calificación.
     Get.back();
   }
 }

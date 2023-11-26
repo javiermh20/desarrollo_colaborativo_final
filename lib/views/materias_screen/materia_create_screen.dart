@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:desarrollo_colaborativo_final/core/router/routes_barrel.dart';
+import 'package:desarrollo_colaborativo_final/models/materia.dart';
 
 class MateriaCrearScreen extends StatefulWidget {
   final Materia? materia;
   final bool editing;
 
-  const MateriaCrearScreen({super.key, this.materia, this.editing = false});
+  const MateriaCrearScreen({Key? key, this.materia, this.editing = false})
+      : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _MateriaCrearScreenState createState() => _MateriaCrearScreenState();
 }
 
@@ -22,7 +22,6 @@ class _MateriaCrearScreenState extends State<MateriaCrearScreen> {
   void initState() {
     super.initState();
 
-    // Preenlaza los datos de la materia si se proporciona una materia
     if (widget.materia != null) {
       final materia = widget.materia!;
       nombreController.text = materia.nombre;
@@ -37,38 +36,82 @@ class _MateriaCrearScreenState extends State<MateriaCrearScreen> {
       appBar: AppBar(
         title: Text(widget.editing ? 'Editar Materia' : 'Agregar Materia'),
       ),
-      body: Padding(
+      body: Container(
+        color: Colors.lightBlue, // Cambia el color de fondo aquí
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextFormField(
+            _buildTextField(
               controller: nombreController,
-              decoration: const InputDecoration(labelText: 'Nombre'),
-            ),
-            TextFormField(
-              controller: descripcionController,
-              decoration: const InputDecoration(labelText: 'Descripción'),
-            ),
-            TextFormField(
-              controller: profesorController,
-              decoration: const InputDecoration(labelText: 'Profesor'),
+              label: 'Nombre',
+              icon: Icons.school,
+              fillColor: Colors.white,
             ),
             const SizedBox(height: 16.0),
+            _buildTextField(
+              controller: descripcionController,
+              label: 'Descripción',
+              maxLines: 3,
+              icon: Icons.description,
+              fillColor: Colors.white,
+            ),
+            const SizedBox(height: 16.0),
+            _buildTextField(
+              controller: profesorController,
+              label: 'Profesor',
+              icon: Icons.person,
+              fillColor: Colors.white,
+            ),
+            const SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: () {
-                // Acción cuando se presiona el botón de guardar
                 if (widget.editing) {
-                  // Si estamos editando, actualiza la materia existente
                   editarMateria();
                 } else {
-                  // Si no estamos editando, agrega una nueva materia
                   guardarMateria();
                 }
               },
-              child: const Text('Guardar'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text(
+                  'Guardar',
+                  style: TextStyle(fontSize: 18.0, color: Colors.black),
+                ),
+              ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    int maxLines = 1,
+    IconData? icon,
+    required Color fillColor,
+  }) {
+    return TextFormField(
+      controller: controller,
+      maxLines: maxLines,
+      style: const TextStyle(fontSize: 16.0),
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: icon != null ? Icon(icon, size: 24.0) : null,
+        fillColor: fillColor,
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        contentPadding: const EdgeInsets.all(16.0),
       ),
     );
   }
@@ -98,13 +141,14 @@ class _MateriaCrearScreenState extends State<MateriaCrearScreen> {
     final String profesor = profesorController.text;
 
     materiaProvider.updateMateria(
-        widget.materia!.id,
-        Materia(
-          id: widget.materia!.id,
-          nombre: nombre,
-          descripcion: descripcion,
-          profesor: profesor,
-        ));
+      widget.materia!.id,
+      Materia(
+        id: widget.materia!.id,
+        nombre: nombre,
+        descripcion: descripcion,
+        profesor: profesor,
+      ),
+    );
 
     Get.back();
   }
