@@ -8,15 +8,18 @@ class Alumno {
   final String carrera;
   final String semestre;
   final String materias;
+  final String fotoUrl;
 
-  Alumno(
-      {required this.id,
-      required this.nombre,
-      required this.apellido,
-      required this.matricula,
-      required this.carrera,
-      required this.semestre,
-      required this.materias});
+  Alumno({
+    required this.id,
+    required this.nombre,
+    required this.apellido,
+    required this.matricula,
+    required this.carrera,
+    required this.semestre,
+    required this.materias,
+    required this.fotoUrl,
+  });
 }
 
 class AlumnoProvider extends GetxController {
@@ -29,6 +32,7 @@ class AlumnoProvider extends GetxController {
       carrera: 'Ingenieria en Sistemas',
       semestre: '8',
       materias: '',
+      fotoUrl: '',
     ),
     Alumno(
       id: '2',
@@ -38,6 +42,7 @@ class AlumnoProvider extends GetxController {
       carrera: 'Ingenieria en Sistemas',
       semestre: '8',
       materias: '',
+      fotoUrl: '',
     ),
     Alumno(
       id: '3',
@@ -47,6 +52,7 @@ class AlumnoProvider extends GetxController {
       carrera: 'Ingenieria en Sistemas',
       semestre: '8',
       materias: '',
+      fotoUrl: '',
     ),
     Alumno(
       id: '4',
@@ -56,6 +62,7 @@ class AlumnoProvider extends GetxController {
       carrera: 'Ingenieria en Sistemas',
       semestre: '8',
       materias: '',
+      fotoUrl: '',
     ),
     Alumno(
       id: '5',
@@ -65,6 +72,7 @@ class AlumnoProvider extends GetxController {
       carrera: 'Ingenieria en Sistemas',
       semestre: '8',
       materias: '',
+      fotoUrl: '',
     ),
   ];
 
@@ -85,6 +93,7 @@ class AlumnoProvider extends GetxController {
       carrera: alumno.carrera,
       semestre: alumno.semestre,
       materias: alumno.materias,
+      fotoUrl: alumno.fotoUrl,
     );
     _alumnos.add(newAlumno);
     update();
@@ -101,6 +110,7 @@ class AlumnoProvider extends GetxController {
         carrera: alumno.carrera,
         semestre: alumno.semestre,
         materias: alumno.materias,
+        fotoUrl: alumno.fotoUrl,
       );
       update();
     } else {

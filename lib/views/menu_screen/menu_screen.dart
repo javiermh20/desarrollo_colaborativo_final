@@ -1,78 +1,70 @@
-import 'package:desarrollo_colaborativo_final/core/router/routes_barrel.dart';
-import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 
-enum _SelectedTab { materia, alumnos, calificaciones, perfil }
+import '../alumnos_screen/alumnos_screen.dart';
+import '../calificaciones_screen/calificaciones_screen.dart';
+import '../materias_screen/materias_screen.dart';
+import '../perfil_screen/perfil_screen.dart';
 
 class MenuScreen extends StatefulWidget {
-  const MenuScreen({super.key});
+  const MenuScreen({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _MenuScreenState createState() => _MenuScreenState();
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  _SelectedTab _selectedTab = _SelectedTab.materia;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _handleIndexChanged(int index) {
-    setState(() {
-      _selectedTab = _SelectedTab.values[index];
-    });
-  }
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: IndexedStack(
-          index: _SelectedTab.values.indexOf(_selectedTab),
-          children: const [
-            /// Materias
-            MateriasScreen(),
-
-            /// Alumnos
-            AlumnosScreen(),
-
-            /// Calificaciones
-            CalificacionesScreen(),
-
-            /// Perfil
-            PerfilScreen()
-          ],
-        ),
-      ),
-      bottomNavigationBar: DotNavigationBar(
-        currentIndex: _SelectedTab.values.indexOf(_selectedTab),
-        onTap: _handleIndexChanged,
-        items: [
-          /// Materias
-          DotNavigationBarItem(
-            icon: const Icon(Icons.book),
-            selectedColor: Colors.blue,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: IndexedStack(
+              index: _currentIndex,
+              children: [
+                MateriasScreen(),
+                AlumnosScreen(),
+                CalificacionesScreen(),
+                PerfilScreen(),
+              ],
+            ),
           ),
-
-          /// Alumnos
-          DotNavigationBarItem(
-            icon: const Icon(Icons.group),
-            selectedColor: Colors.blue,
-          ),
-
-          /// Calificaciones
-          DotNavigationBarItem(
-            icon: const Icon(Icons.date_range),
-            selectedColor: Colors.blue,
-          ),
-
-          /// Perfil
-          DotNavigationBarItem(
-            icon: const Icon(Icons.person),
-            selectedColor: Colors.blue,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              padding: EdgeInsets.only(bottom: 20.0),
+              child: DotNavigationBar(
+                paddingR: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                margin: const EdgeInsets.all(12.0),
+                currentIndex: _currentIndex,
+                onTap: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                items: [
+                  DotNavigationBarItem(
+                    icon: const Icon(Icons.book, color: Colors.black),
+                    selectedColor: Colors.black,
+                  ),
+                  DotNavigationBarItem(
+                    icon: const Icon(Icons.group, color: Colors.black),
+                    selectedColor: Colors.black,
+                  ),
+                  DotNavigationBarItem(
+                    icon: const Icon(Icons.date_range, color: Colors.black),
+                    selectedColor: Colors.black,
+                  ),
+                  DotNavigationBarItem(
+                    icon: const Icon(Icons.person, color: Colors.black),
+                    selectedColor: Colors.black,
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

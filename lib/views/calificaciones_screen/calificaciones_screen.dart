@@ -6,7 +6,6 @@ class CalificacionesScreen extends StatefulWidget {
   const CalificacionesScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _CalificacionesScreenState createState() => _CalificacionesScreenState();
 }
 
@@ -14,72 +13,112 @@ class _CalificacionesScreenState extends State<CalificacionesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<CalificacionEstudianteProvider>(
-        builder: (calificacionEstudianteProvider) {
-          final calificaciones =
-              calificacionEstudianteProvider.calificacionesEstudiantes;
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFF003AE3), Color(0xFF00C0FF)],
+            ),
+          ),
+          child: GetBuilder<CalificacionEstudianteProvider>(
+            builder: (calificacionEstudianteProvider) {
+              final calificaciones =
+                  calificacionEstudianteProvider.calificacionesEstudiantes;
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Calificaciones',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: calificaciones.length,
-                  itemBuilder: (context, index) {
-                    final calificacion = calificaciones[index];
-
-                    return ListTile(
-                      title: Text(calificacion.materia),
-                      subtitle: Text(calificacion.calificacion.toString()),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () {
-                              Get.to(CalificacionCrearScreen(
-                                calificacion:
-                                    calificacion, // Pasamos la calificación a la pantalla de edición
-                              ));
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () {
-                              // Acción cuando se presiona el botón de eliminar
-                              calificacionEstudianteProvider
-                                  .deleteCalificacionEstudiante(
-                                      calificacion.id);
-                            },
-                          ),
-                        ],
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Center(
+                      child: Text(
+                        'Calificaciones',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24.0,
+                          color: Colors.white,
+                        ),
                       ),
-                      onTap: () {
-                        // Acción cuando se selecciona la calificación
+                    ),
+                  ),
+                  Expanded(
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16.0,
+                        mainAxisSpacing: 16.0,
+                        childAspectRatio:
+                            1.0, // Asegura que los elementos sean cuadrados
+                      ),
+                      padding:
+                          EdgeInsets.all(16.0), // Agrega un pequeño espaciado
+                      itemCount: calificaciones.length,
+                      itemBuilder: (context, index) {
+                        final calificacion = calificaciones[index];
+
+                        Color tileColor = index.isEven
+                            ? Color(0xFF69A0FF)
+                            : Color(0xFF0077B6);
+
+                        return GestureDetector(
+                          onTap: () {
+                            // Acción cuando se selecciona la calificación
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: tileColor,
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  calificacion.materia,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(height: 8.0),
+                                Text(
+                                  calificacion.calificacion.toString(),
+                                  style: TextStyle(
+                                    color: Colors
+                                        .amber, // Cambia el color para resaltar la calificación
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
                       },
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
-        },
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Acción cuando se presiona el botón flotante
-          // Puedes abrir una pantalla para agregar una nueva calificación o realizar otras acciones.
-          Get.to(const CalificacionCrearScreen());
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: FloatingActionButton(
+          onPressed: () {
+            Get.to(const CalificacionCrearScreen());
+          },
+          backgroundColor: Colors.white,
+          mini: true, // Cambia el botón a un tamaño más pequeño
+          child: const Icon(Icons.add, color: Colors.black),
+        ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

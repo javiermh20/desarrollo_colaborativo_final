@@ -3,12 +3,11 @@ import 'package:get/get.dart';
 import 'package:desarrollo_colaborativo_final/core/router/routes_barrel.dart';
 
 class AlumnoCrearScreen extends StatefulWidget {
-  final Alumno? alumno; // Recibe el alumno como parámetro
+  final Alumno? alumno;
 
-  const AlumnoCrearScreen({super.key, this.alumno});
+  const AlumnoCrearScreen({Key? key, this.alumno}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _AlumnoCrearScreenState createState() => _AlumnoCrearScreenState();
 }
 
@@ -19,19 +18,21 @@ class _AlumnoCrearScreenState extends State<AlumnoCrearScreen> {
   final TextEditingController carreraController = TextEditingController();
   final TextEditingController semestreController = TextEditingController();
   final TextEditingController materiasController = TextEditingController();
+  final TextEditingController fotoUrlController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
-    // Llenamos los controladores con los datos del alumno si se proporciona
     if (widget.alumno != null) {
-      nombreController.text = widget.alumno!.nombre;
-      apellidoController.text = widget.alumno!.apellido;
-      matriculaController.text = widget.alumno!.matricula;
-      carreraController.text = widget.alumno!.carrera;
-      semestreController.text = widget.alumno!.semestre;
-      materiasController.text = widget.alumno!.materias;
+      final alumno = widget.alumno!;
+      nombreController.text = alumno.nombre;
+      apellidoController.text = alumno.apellido;
+      matriculaController.text = alumno.matricula;
+      carreraController.text = alumno.carrera;
+      semestreController.text = alumno.semestre;
+      materiasController.text = alumno.materias;
+      fotoUrlController.text = alumno.fotoUrl;
     }
   }
 
@@ -71,10 +72,27 @@ class _AlumnoCrearScreenState extends State<AlumnoCrearScreen> {
                 controller: materiasController,
                 decoration: const InputDecoration(labelText: 'Materias'),
               ),
+              TextFormField(
+                controller: fotoUrlController,
+                decoration: const InputDecoration(labelText: 'URL de la Foto'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  cargarFoto();
+                },
+                child: const Text('Cargar Foto'),
+              ),
+              if (fotoUrlController.text.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: NetworkImage(fotoUrlController.text),
+                  ),
+                ),
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // Acción cuando se presiona el botón de guardar
                   guardarAlumno();
                 },
                 child: const Text('Guardar'),
@@ -86,6 +104,11 @@ class _AlumnoCrearScreenState extends State<AlumnoCrearScreen> {
     );
   }
 
+  Future<void> cargarFoto() async {
+    // Lógica para cargar la foto
+    // Puedes implementar la carga de imágenes aquí utilizando ImagePicker u otro método.
+  }
+
   void guardarAlumno() {
     final String nombre = nombreController.text;
     final String apellido = apellidoController.text;
@@ -93,16 +116,10 @@ class _AlumnoCrearScreenState extends State<AlumnoCrearScreen> {
     final String carrera = carreraController.text;
     final int semestre = int.tryParse(semestreController.text) ?? 0;
     final String materias = materiasController.text;
+    final String fotoUrl = fotoUrlController.text;
 
-    // Realiza la lógica para guardar el alumno aquí.
-    // Puedes usar tu AlumnoProvider o el método que prefieras.
-
-    // Ejemplo de cómo podrías usar el provider (asegúrate de tenerlo registrado en GetIt).
     final AlumnoProvider alumnoProvider = Get.find();
-
-    // Verificamos si estamos editando o agregando un nuevo alumno
     if (widget.alumno == null) {
-      // Agregar nuevo alumno
       alumnoProvider.addAlumno(Alumno(
         id: DateTime.now().toString(),
         nombre: nombre,
@@ -111,23 +128,24 @@ class _AlumnoCrearScreenState extends State<AlumnoCrearScreen> {
         carrera: carrera,
         semestre: semestre.toString(),
         materias: materias,
+        fotoUrl: fotoUrl,
       ));
     } else {
-      // Editar alumno existente
       alumnoProvider.updateAlumno(
-          widget.alumno!.id,
-          Alumno(
-            id: widget.alumno!.id,
-            nombre: nombre,
-            apellido: apellido,
-            matricula: matricula,
-            carrera: carrera,
-            semestre: semestre.toString(),
-            materias: materias,
-          ));
+        widget.alumno!.id,
+        Alumno(
+          id: widget.alumno!.id,
+          nombre: nombre,
+          apellido: apellido,
+          matricula: matricula,
+          carrera: carrera,
+          semestre: semestre.toString(),
+          materias: materias,
+          fotoUrl: fotoUrl,
+        ),
+      );
     }
 
-    // Cierra la pantalla actual después de guardar el alumno.
     Get.back();
   }
 }
