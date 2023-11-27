@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PerfilScreen extends StatefulWidget {
-  const PerfilScreen({Key? key});
+  const PerfilScreen({super.key, Key? key1});
 
   @override
+  // ignore: library_private_types_in_public_api
   _PerfilScreenState createState() => _PerfilScreenState();
 }
 
@@ -29,11 +30,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
                           color: Colors.black.withOpacity(0.2),
                           spreadRadius: 5,
                           blurRadius: 10,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 70.0,
                       backgroundImage: NetworkImage(
                         'https://avatars.githubusercontent.com/u/120158035?s=400&u=445cfac57218d56abc7799b890421035478518d6&v=4',
@@ -46,7 +47,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Javier Mejia',
                           style: TextStyle(
                             fontSize: 28.0,
@@ -55,7 +56,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                           ),
                         ),
                         const SizedBox(height: 8.0),
-                        Text(
+                        const Text(
                           'javiermh20@waske.com',
                           style: TextStyle(
                             fontSize: 18.0,
@@ -66,11 +67,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12.0),
-                            color: Color.fromARGB(
+                            color: const Color.fromARGB(
                                 255, 208, 210, 211), // Puedes ajustar el color
                           ),
                           padding: const EdgeInsets.all(16.0),
-                          child: Text(
+                          child: const Text(
                             '¡Bienvenido a mi perfil! Soy un apasionado desarrollador de aplicaciones móviles. Me encanta aprender y compartir conocimientos con la comunidad.',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -107,18 +108,18 @@ class _PerfilScreenState extends State<PerfilScreen> {
                           '/login'); // Ajusta la ruta según tu configuración de rutas
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 255, 255, 255),
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.0),
                       child: Text(
                         'Cerrar Sesión',
                         style: TextStyle(
                             fontSize: 16.0,
-                            color: const Color.fromARGB(255, 0, 0, 0)),
+                            color: Color.fromARGB(255, 0, 0, 0)),
                       ),
                     ),
                   ),
@@ -139,9 +140,9 @@ class _PerfilScreenState extends State<PerfilScreen> {
         child: Container(
           height: 170.0,
           decoration: BoxDecoration(
-            image: DecorationImage(
+            image: const DecorationImage(
               image: NetworkImage(
-                'https://avatars.githubusercontent.com/u/120158035?s=400&u=445cfac57218d56abc7799b890421035478518d6&v=4',
+                'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg',
               ),
               fit: BoxFit.cover,
             ),

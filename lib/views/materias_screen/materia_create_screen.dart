@@ -6,10 +6,10 @@ class MateriaCrearScreen extends StatefulWidget {
   final Materia? materia;
   final bool editing;
 
-  const MateriaCrearScreen({Key? key, this.materia, this.editing = false})
-      : super(key: key);
+  const MateriaCrearScreen({super.key, this.materia, this.editing = false});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MateriaCrearScreenState createState() => _MateriaCrearScreenState();
 }
 
@@ -73,7 +73,7 @@ class _MateriaCrearScreenState extends State<MateriaCrearScreen> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.white,
+                backgroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),

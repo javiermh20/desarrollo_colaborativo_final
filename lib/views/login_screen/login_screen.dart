@@ -17,11 +17,14 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF003AE3), Color(0xFF00C0FF)], // Cambia estos colores según tus preferencias
+            colors: [
+              Color(0xFF003AE3),
+              Color(0xFF00C0FF)
+            ], // Cambia estos colores según tus preferencias
           ),
         ),
         child: Padding(
@@ -31,13 +34,17 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const SizedBox(height: 24.0),
               Container(
-                padding: const EdgeInsets.all(16.0), // Padding para los elementos internos
+                padding: const EdgeInsets.all(
+                    16.0), // Padding para los elementos internos
                 decoration: BoxDecoration(
-                  color: Colors.white, // Fondo blanco para la sección de la imagen y los TextField
-                  borderRadius: BorderRadius.circular(12.0), // Bordes redondeados
+                  color: Colors
+                      .white, // Fondo blanco para la sección de la imagen y los TextField
+                  borderRadius:
+                      BorderRadius.circular(12.0), // Bordes redondeados
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // Alinea los elementos internos en el centro
+                  mainAxisAlignment: MainAxisAlignment
+                      .center, // Alinea los elementos internos en el centro
                   children: [
                     const LogoWidget(),
                     const SizedBox(height: 24.0),
@@ -47,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 24.0),
               ElevatedButton(
                 onPressed: () {
@@ -62,10 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12.0),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Iniciar Sesión',
-                      style: TextStyle(fontSize: 16.0),
+                      style: TextStyle(fontSize: 16.0, color: Colors.black),
                     ),
                   ),
                 ),

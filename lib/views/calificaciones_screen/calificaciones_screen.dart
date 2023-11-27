@@ -6,6 +6,7 @@ class CalificacionesScreen extends StatefulWidget {
   const CalificacionesScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CalificacionesScreenState createState() => _CalificacionesScreenState();
 }
 
@@ -15,7 +16,7 @@ class _CalificacionesScreenState extends State<CalificacionesScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -30,8 +31,8 @@ class _CalificacionesScreenState extends State<CalificacionesScreen> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
                     child: Center(
                       child: Text(
                         'Calificaciones',
@@ -45,22 +46,23 @@ class _CalificacionesScreenState extends State<CalificacionesScreen> {
                   ),
                   Expanded(
                     child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.0,
                         mainAxisSpacing: 16.0,
                         childAspectRatio:
                             1.0, // Asegura que los elementos sean cuadrados
                       ),
-                      padding:
-                          EdgeInsets.all(16.0), // Agrega un pequeño espaciado
+                      padding: const EdgeInsets.all(
+                          16.0), // Agrega un pequeño espaciado
                       itemCount: calificaciones.length,
                       itemBuilder: (context, index) {
                         final calificacion = calificaciones[index];
 
                         Color tileColor = index.isEven
-                            ? Color(0xFF69A0FF)
-                            : Color(0xFF0077B6);
+                            ? const Color(0xFF69A0FF)
+                            : const Color(0xFF0077B6);
 
                         return GestureDetector(
                           onTap: () {
@@ -76,17 +78,17 @@ class _CalificacionesScreenState extends State<CalificacionesScreen> {
                               children: [
                                 Text(
                                   calificacion.materia,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                                SizedBox(height: 8.0),
+                                const SizedBox(height: 8.0),
                                 Text(
                                   calificacion.calificacion.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors
                                         .amber, // Cambia el color para resaltar la calificación
                                     fontSize: 24.0,
@@ -98,21 +100,27 @@ class _CalificacionesScreenState extends State<CalificacionesScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     IconButton(
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.edit,
                                         color: Colors.white,
                                       ),
                                       onPressed: () {
                                         // Implementa la lógica para editar la calificación
+                                        Get.to(CalificacionCrearScreen(
+                                            calificacion: calificacion,
+                                            editing: true));
                                       },
                                     ),
                                     IconButton(
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.delete,
                                         color: Colors.white,
                                       ),
                                       onPressed: () {
                                         // Implementa la lógica para eliminar la calificación
+                                        calificacionEstudianteProvider
+                                            .deleteCalificacionEstudiante(
+                                                calificacion.id);
                                       },
                                     ),
                                   ],
@@ -131,17 +139,22 @@ class _CalificacionesScreenState extends State<CalificacionesScreen> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding:
+            const EdgeInsets.only(bottom: kBottomNavigationBarHeight + 90.0),
         child: FloatingActionButton(
           onPressed: () {
             Get.to(const CalificacionCrearScreen());
           },
           backgroundColor: Colors.white,
           mini: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(color: Colors.black),
+          ),
           child: const Icon(Icons.add, color: Colors.black),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

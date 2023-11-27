@@ -4,10 +4,12 @@ import 'package:desarrollo_colaborativo_final/models/alumno.dart';
 
 class AlumnoCrearScreen extends StatefulWidget {
   final Alumno? alumno;
+  final bool editing;
 
-  const AlumnoCrearScreen({Key? key, this.alumno}) : super(key: key);
+  const AlumnoCrearScreen({super.key, this.alumno, this.editing = false});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AlumnoCrearScreenState createState() => _AlumnoCrearScreenState();
 }
 
@@ -106,7 +108,7 @@ class _AlumnoCrearScreenState extends State<AlumnoCrearScreen> {
                         cargarFoto();
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
@@ -135,7 +137,7 @@ class _AlumnoCrearScreenState extends State<AlumnoCrearScreen> {
                         guardarAlumno();
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),

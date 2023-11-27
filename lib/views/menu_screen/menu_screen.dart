@@ -7,9 +7,10 @@ import '../materias_screen/materias_screen.dart';
 import '../perfil_screen/perfil_screen.dart';
 
 class MenuScreen extends StatefulWidget {
-  const MenuScreen({Key? key}) : super(key: key);
+  const MenuScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MenuScreenState createState() => _MenuScreenState();
 }
 
@@ -24,7 +25,7 @@ class _MenuScreenState extends State<MenuScreen> {
           Positioned.fill(
             child: IndexedStack(
               index: _currentIndex,
-              children: [
+              children: const [
                 MateriasScreen(),
                 AlumnosScreen(),
                 CalificacionesScreen(),
@@ -35,9 +36,10 @@ class _MenuScreenState extends State<MenuScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              padding: EdgeInsets.only(bottom: 20.0),
+              padding: const EdgeInsets.only(bottom: 20.0),
               child: DotNavigationBar(
-                paddingR: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                paddingR:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 margin: const EdgeInsets.all(12.0),
                 currentIndex: _currentIndex,
                 onTap: (index) {

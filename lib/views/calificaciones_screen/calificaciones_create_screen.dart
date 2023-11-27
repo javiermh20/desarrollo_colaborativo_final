@@ -4,11 +4,13 @@ import 'package:desarrollo_colaborativo_final/core/router/routes_barrel.dart';
 
 class CalificacionCrearScreen extends StatefulWidget {
   final CalificacionEstudiante? calificacion;
+  final bool editing;
 
-  const CalificacionCrearScreen({Key? key, this.calificacion})
-      : super(key: key);
+  const CalificacionCrearScreen(
+      {super.key, this.calificacion, this.editing = false});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CalificacionCrearScreenState createState() =>
       _CalificacionCrearScreenState();
 }
@@ -70,7 +72,7 @@ class _CalificacionCrearScreenState extends State<CalificacionCrearScreen> {
                 guardarCalificacion();
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.white,
+                backgroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),

@@ -6,6 +6,7 @@ class AlumnosScreen extends StatefulWidget {
   const AlumnosScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AlumnosScreenState createState() => _AlumnosScreenState();
 }
 
@@ -14,7 +15,7 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -29,8 +30,8 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
                     child: Center(
                       child: Text(
                         'Alumnos',
@@ -49,8 +50,8 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                         final alumno = alumnos[index];
 
                         Color tileColor = index.isEven
-                            ? Color(0xFF69A0FF)
-                            : Color(0xFF0077B6);
+                            ? const Color(0xFF69A0FF)
+                            : const Color(0xFF0077B6);
 
                         return Container(
                           margin: const EdgeInsets.symmetric(
@@ -62,11 +63,11 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                           child: ListTile(
                             title: Text(
                               alumno.nombre,
-                              style: TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
                             ),
                             subtitle: Text(
                               alumno.apellido,
-                              style: TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
                             ),
                             onTap: () {
                               // Acción cuando se selecciona el alumno
@@ -75,21 +76,24 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.edit,
                                     color: Colors.white,
                                   ),
                                   onPressed: () {
                                     // Implementa la lógica para editar el alumno
+                                    Get.to(AlumnoCrearScreen(
+                                        alumno: alumno, editing: true));
                                   },
                                 ),
                                 IconButton(
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.delete,
                                     color: Colors.white,
                                   ),
                                   onPressed: () {
                                     // Implementa la lógica para eliminar el alumno
+                                    alumnoProvider.deleteAlumno(alumno.id);
                                   },
                                 ),
                               ],
@@ -106,19 +110,22 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Align(
-          alignment: Alignment.bottomRight,
-          child: FloatingActionButton(
-            onPressed: () {
-              Get.to(const AlumnoCrearScreen());
-            },
-            backgroundColor: Colors.white,
-            mini: true,
-            child: const Icon(Icons.add, color: Colors.black),
+        padding:
+            const EdgeInsets.only(bottom: kBottomNavigationBarHeight + 90.0),
+        child: FloatingActionButton(
+          onPressed: () {
+            Get.to(const AlumnoCrearScreen());
+          },
+          backgroundColor: Colors.white,
+          mini: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(color: Colors.black),
           ),
+          child: const Icon(Icons.add, color: Colors.black),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

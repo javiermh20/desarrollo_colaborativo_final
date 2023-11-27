@@ -6,6 +6,7 @@ class MateriasScreen extends StatefulWidget {
   const MateriasScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MateriasScreenState createState() => _MateriasScreenState();
 }
 
@@ -15,7 +16,7 @@ class _MateriasScreenState extends State<MateriasScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -29,8 +30,8 @@ class _MateriasScreenState extends State<MateriasScreen> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
                     child: Center(
                       child: Text(
                         'Materias',
@@ -49,8 +50,8 @@ class _MateriasScreenState extends State<MateriasScreen> {
                         final materia = materias[index];
 
                         Color tileColor = index.isEven
-                            ? Color(0xFF69A0FF)
-                            : Color(0xFF0077B6);
+                            ? const Color(0xFF69A0FF)
+                            : const Color(0xFF0077B6);
 
                         return Container(
                           margin: const EdgeInsets.symmetric(
@@ -62,11 +63,11 @@ class _MateriasScreenState extends State<MateriasScreen> {
                           child: ListTile(
                             title: Text(
                               materia.nombre,
-                              style: TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
                             ),
                             subtitle: Text(
                               materia.profesor,
-                              style: TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
                             ),
                             onTap: () {
                               // Acción cuando se selecciona la materia
@@ -75,17 +76,18 @@ class _MateriasScreenState extends State<MateriasScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: Icon(Icons.edit, color: Colors.white),
+                                  icon: const Icon(Icons.edit,
+                                      color: Colors.white),
                                   onPressed: () {
-                                    // Acción cuando se presiona el botón de editar
-                                    // Aquí puedes navegar a la pantalla de edición
+                                    Get.to(MateriaCrearScreen(
+                                        materia: materia, editing: true));
                                   },
                                 ),
                                 IconButton(
-                                  icon: Icon(Icons.delete, color: Colors.white),
+                                  icon: const Icon(Icons.delete,
+                                      color: Colors.white),
                                   onPressed: () {
-                                    // Acción cuando se presiona el botón de eliminar
-                                    // Aquí puedes mostrar un diálogo de confirmación y eliminar el elemento
+                                    materiaProvider.deleteMateria(materia.id);
                                   },
                                 ),
                               ],
@@ -102,19 +104,22 @@ class _MateriasScreenState extends State<MateriasScreen> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Align(
-          alignment: Alignment.bottomRight,
-          child: FloatingActionButton(
-            onPressed: () {
-              Get.to(const MateriaCrearScreen());
-            },
-            backgroundColor: Colors.white,
-            mini: true,
-            child: const Icon(Icons.add, color: Colors.black),
+        padding:
+            const EdgeInsets.only(bottom: kBottomNavigationBarHeight + 90.0),
+        child: FloatingActionButton(
+          onPressed: () {
+            Get.to(const MateriaCrearScreen());
+          },
+          backgroundColor: Colors.white,
+          mini: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(color: Colors.black),
           ),
+          child: const Icon(Icons.add, color: Colors.black),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
