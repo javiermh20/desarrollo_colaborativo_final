@@ -71,6 +71,29 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
                             onTap: () {
                               // Acción cuando se selecciona el alumno
                             },
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    // Implementa la lógica para editar el alumno
+                                  },
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    // Implementa la lógica para eliminar el alumno
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -91,7 +114,7 @@ class _AlumnosScreenState extends State<AlumnosScreen> {
               Get.to(const AlumnoCrearScreen());
             },
             backgroundColor: Colors.white,
-            mini: true, // Cambia el botón a un tamaño más pequeño
+            mini: true,
             child: const Icon(Icons.add, color: Colors.black),
           ),
         ),

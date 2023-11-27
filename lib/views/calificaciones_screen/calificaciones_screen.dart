@@ -94,6 +94,29 @@ class _CalificacionesScreenState extends State<CalificacionesScreen> {
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        // Implementa la lógica para editar la calificación
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        // Implementa la lógica para eliminar la calificación
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
@@ -114,7 +137,7 @@ class _CalificacionesScreenState extends State<CalificacionesScreen> {
             Get.to(const CalificacionCrearScreen());
           },
           backgroundColor: Colors.white,
-          mini: true, // Cambia el botón a un tamaño más pequeño
+          mini: true,
           child: const Icon(Icons.add, color: Colors.black),
         ),
       ),
